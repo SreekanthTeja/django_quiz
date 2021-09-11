@@ -1,0 +1,32 @@
+{% load static %}
+<h3 class="h5 mb-3 fw-normal">Session ID: {{request.GET.session}}
+    <span class="float-end small badge bg-dark">{{request.GET.current}} / {{request.GET.total}}</span>
+</h3>
+
+<div id="form-container">
+    <form id="form-data" method="GET">
+        <p>{{question.question}}</p>
+        {% if question.types == 1 %}
+        {% for i in range %}
+        <div class="form-check form-check-inline">
+            <input id="radio" class="form-check-input" type="radio" name="answer" id="id_radio{{forloop.counter}}"  value="{{forloop.counter}}">
+            <label class="form-check-label" for="radio{{forloop.counter}}">{{forloop.counter}}</label>
+        </div>
+        {% endfor %}
+        {% else %}
+            <textarea class="form-control" id="id_text" name="answer" placeholder="Write your answer here"></textarea>
+        {% endif %}
+    </form>
+
+    <div>
+        <hr />
+        {% if request.GET.current != '1' %}
+        <a href="javascript:void(0)" onclick="apiAjax('{% url 'next' %}?session={{request.GET.session}}&current={{previous}}&total={{total}}')" class="btn btn-sm btn-primary float-start">PREVIOUS</a>
+        {% endif %}
+        {% if request.GET.current == request.GET.total %}
+        <a href="javascript:void(0)" onclick="apiAjax('{% url 'next' %}?session={{request.GET.session}}&current={{current}}&total={{total}}&finish=on')" class="btn btn-sm btn-primary float-end">FINISH</a>
+        {% else %}
+        <a href="javascript:void(0)" onclick="apiAjax('{% url 'next' %}?session={{request.GET.session}}&current={{current}}&total={{total}}')" class="btn btn-sm btn-primary float-end">NEXT</a>
+        {% endif %}
+    </div>
+</div>

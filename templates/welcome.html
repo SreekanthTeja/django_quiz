@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="form-signin p-3 ps-5 pe-5">
+    <div id="container">
+        <h3 class="h5 mb-3 fw-normal">Welcome to Hyperreality Technologies</h3>
+
+        <div id="form-container">
+            <p>Session: {{session_id}}</p>
+            <p>You'll have to attempt {{questions.count}} questions</p>
+            <form>
+                <input type="hidden" name="welcome" value="yes" />
+            </form>
+            <div>
+                <a href="javascript:void(0)" onclick="apiAjax('{% url 'next' %}?session={{session_id}}&current={{questions.first.id}}&total={{questions.count}}')" class="btn btn-sm btn-primary">Take Quiz</a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
